@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../css/Sidebar.css";
+import logoName from '../assets/logoName.png'
 
 import { MdKeyboardArrowDown, MdKeyboardArrowUp, MdClose } from "react-icons/md";
 import { MdHome } from "react-icons/md";
@@ -52,6 +53,7 @@ const Sidebar = ({ isOpen, onClose }) => {
   return (
     <aside className={`sb ${isOpen ? "sb--open" : ""}`} aria-hidden={!isOpen}>
       <nav className="sb-nav">
+      <img src={logoName} alt="logo" />
         <button className="sb-close" aria-label="Close sidebar" onClick={onClose}>
           <MdClose/> Close
         </button>

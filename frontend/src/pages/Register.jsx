@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../css/Auth.css";
+import logoName from '../assets/logoName.png'
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -52,6 +53,7 @@ const Register = () => {
     <div className="auth-page">
       <div className="auth-card">
         <header className="auth-header">
+          <img src={logoName} alt="logo" />
           <h2>Create account</h2>
         </header>
 
