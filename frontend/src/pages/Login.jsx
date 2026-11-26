@@ -73,18 +73,18 @@ const Login = () => {
           />
         </div>
 
-        <p className="forgot-password" onClick={() => navigate("/forgot-password")}>Forgot password?</p>
+        {/* <p className="forgot-password" onClick={() => navigate("/forgot-password")}>Forgot password?</p> */}
 
         <button className="btn btn-primary" onClick={() => handleLogin()}>
           {loading ? "Logging in...": "Login"}
           
         </button>
 
-        <p className="divider">or</p>
+        {/* <p className="divider">or</p> */}
 
-        <div className="social-buttons">
+        {/* <div className="social-buttons">
           <button className="btn btn-social"><FcGoogle /> Google</button>
-        </div>
+        </div> */}
 
         <p className="auth-footer">
           Dont have an account?{" "}
