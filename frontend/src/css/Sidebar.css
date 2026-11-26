@@ -257,6 +257,7 @@
 .sb-close {
   display: none !important;
   align-items: center;
+  justify-content: end;
   gap: 6px;
   margin-bottom: 8px;
 }

@@ -95,29 +95,29 @@ app.post("/auth/login", async (req, res) => {
   }
 });
 
-app.get("/users", async (req, res) => {
-  try {
-    const users = await User.find();
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+// app.get("/users", async (req, res) => {
+//   try {
+//     const users = await User.find();
+//     res.status(200).json(users);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
 
-app.delete("/delete-user/:id", async(req, res) => {
-  try{
-    const {id} = req.params
-    const user = await User.findByIdAndDelete(id)
+// app.delete("/delete-user/:id", async(req, res) => {
+//   try{
+//     const {id} = req.params
+//     const user = await User.findByIdAndDelete(id)
 
-    if(!user){
-      return res.status(400).json({message: "User not found"})
-    }
-    res.status(200).json({message: "User acount deleted successfully", user})
+//     if(!user){
+//       return res.status(400).json({message: "User not found"})
+//     }
+//     res.status(200).json({message: "User acount deleted successfully", user})
 
-  }catch(error){
-    res.status(500).json({ error: error.message });
-  }
-})
+//   }catch(error){
+//     res.status(500).json({ error: error.message });
+//   }
+// })
 
 app.delete("/users/me", protect, async (req, res) => {
   try {

@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "../css/Sidebar.css";
-import logoName from '../assets/logoName.png'
+import logoName from "../assets/logoName.png";
 
-import { MdKeyboardArrowDown, MdKeyboardArrowUp, MdClose } from "react-icons/md";
+import {
+  MdKeyboardArrowDown,
+  MdKeyboardArrowUp,
+  MdClose,
+} from "react-icons/md";
 import { MdHome } from "react-icons/md";
 import { IoMdAdd } from "react-icons/io";
 import { FaList } from "react-icons/fa";
@@ -42,7 +46,7 @@ const Sidebar = ({ isOpen, onClose }) => {
     if (window.matchMedia("(max-width: 768px)").matches) onClose();
   }
 
-   function handleLogout() {
+  function handleLogout() {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
     navigate("/");
@@ -53,29 +57,45 @@ const Sidebar = ({ isOpen, onClose }) => {
   return (
     <aside className={`sb ${isOpen ? "sb--open" : ""}`} aria-hidden={!isOpen}>
       <nav className="sb-nav">
-      <img src={logoName} alt="logo" />
-        <button className="sb-close" aria-label="Close sidebar" onClick={onClose}>
-          <MdClose/> Close
+        <button
+          className="sb-close"
+          aria-label="Close sidebar"
+          onClick={onClose}
+        >
+          <MdClose /> Close
         </button>
+        <img src={logoName} alt="logo" />
 
-<NavLink className="sb-link" to="/dashboard" onClick={handleNavClick}>
-  <MdHome style={{ fontSize: 20 }} /> Dashboard
-</NavLink>
-<NavLink className="sb-link" to="/add-transaction" onClick={handleNavClick}>
-  <IoMdAdd style={{ fontSize: 20 }} /> Add Transaction
-</NavLink>
-<NavLink className="sb-link" to="/transactions" onClick={handleNavClick}>
-  <FaList style={{ fontSize: 20 }} /> Transactions
-</NavLink>
-<NavLink className="sb-link" to="/settings" onClick={handleNavClick}>
-  <IoIosSettings style={{ fontSize: 20 }} /> Settings
-</NavLink>
+        <NavLink className="sb-link" to="/dashboard" onClick={handleNavClick}>
+          <MdHome style={{ fontSize: 20 }} /> Dashboard
+        </NavLink>
+        <NavLink
+          className="sb-link"
+          to="/add-transaction"
+          onClick={handleNavClick}
+        >
+          <IoMdAdd style={{ fontSize: 20 }} /> Add Transaction
+        </NavLink>
+        <NavLink
+          className="sb-link"
+          to="/transactions"
+          onClick={handleNavClick}
+        >
+          <FaList style={{ fontSize: 20 }} /> Transactions
+        </NavLink>
+        <NavLink className="sb-link" to="/settings" onClick={handleNavClick}>
+          <IoIosSettings style={{ fontSize: 20 }} /> Settings
+        </NavLink>
       </nav>
 
       <div className="sb-profile" ref={profileRef}>
         {menuOpen && (
           <div className="sb-menu" role="menu">
-            <button className="sb-menu-item" role="menuitem" onClick={handleLogout}>
+            <button
+              className="sb-menu-item"
+              role="menuitem"
+              onClick={handleLogout}
+            >
               Log out @{user.username}
             </button>
           </div>
