@@ -1,0 +1,10 @@
+.app-main {
+  padding: 24px;
+  transition: margin-left 0.25s ease;
+}
+
+@media (min-width: 769px) {
+  .app-main--shifted {
+    margin-left: 260px; /* same as --sidebar-width */
+  }
+}

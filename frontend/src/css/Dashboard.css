@@ -1,0 +1,302 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+
+.dash {
+  --page-bg: #ffffff;
+  --bg: #eef2ef;
+  --surface: #ffffff;
+  --ink: #14221e;
+  --muted: #5b6b64;
+  --border: #d5ddd8;
+  --accent: #0f6b4f;
+  --accent-hover: #0b5640;
+  --danger: #b3261e;
+
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+  --font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sidebar-width: 260px;
+}
+
+.dash,
+.dash *,
+.dash *::before,
+.dash *::after {
+  box-sizing: border-box;
+}
+
+.dash {
+  min-height: 100vh;
+  background: var(--page-bg);
+  font-family: var(--font);
+  color: var(--ink);
+}
+
+.dash p,
+.dash h2,
+.dash h3 {
+  margin: 0;
+}
+
+/* ---------- Page header ---------- */
+.dash-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.dash-header h2 {
+  display: flex;
+  align-items: center;
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+
+.dash-add {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  font-size: 0.925rem;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  color: #fff;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.dash-add:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.dash-add:focus-visible {
+  outline: 3px solid rgba(15, 107, 79, 0.35);
+  outline-offset: 2px;
+}
+
+.dash-add svg {
+  font-size: 1.15rem;
+}
+
+/* ---------- Layout ---------- */
+.dash-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dash-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 16px rgba(20, 34, 30, 0.05);
+}
+
+/* ---------- Summary cards ---------- */
+.dash-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.dash-stat {
+  padding: 20px 24px;
+}
+
+.dash-stat h2 {
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.dash-stat p {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.dash-stat-balance p {
+  color: var(--ink);
+}
+
+.dash-stat-income p {
+  color: var(--accent);
+}
+
+.dash-stat-expense p {
+  color: var(--danger);
+}
+
+/* ---------- Two-column panels ---------- */
+.dash-panels {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.dash-panel {
+  padding: 24px;
+}
+
+.dash-panel-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.dash-panel-expense{
+  margin: 0 0 20px;
+}
+
+/* ---------- Spending by category ---------- */
+.dash-category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.dash-category-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.dash-category-name {
+  font-size: 0.95rem;
+  text-transform: capitalize;
+}
+
+.dash-category-amount {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.dash-bar {
+  height: 8px;
+  overflow: hidden;
+  background: var(--bg);
+  border-radius: 999px;
+}
+
+.dash-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+/* ---------- Recent transactions ---------- */
+.dash-recent-list{
+  margin-top: 20px;
+  height: 320px;
+  padding: 10px;
+}
+
+.dash-recent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.dash-recent:first-child {
+  padding-top: 0;
+}
+
+.dash-recent:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.dash-recent-info {
+  min-width: 0;
+}
+
+.dash-recent-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.dash-recent-meta {
+  margin-top: 2px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.dash-recent-amount {
+  flex-shrink: 0;
+  font-weight: 700;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.dash-recent-income {
+  color: var(--accent);
+}
+
+.dash-recent-expense {
+  color: var(--danger);
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 1024px) {
+  .dash-stat p {
+    font-size: 1.4rem;
+  }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 768px) {
+  .dash-header {
+    margin-bottom: 16px;
+  }
+
+  .dash-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .dash-add {
+    padding: 9px 14px;
+    font-size: 0.875rem;
+  }
+
+  /* Balance on top, Income + Expenses side by side */
+  .dash-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .dash-stat-balance {
+    grid-column: 1 / -1;
+  }
+
+  .dash-stat {
+    padding: 16px 18px;
+  }
+
+  .dash-stat p {
+    font-size: 1.3rem;
+  }
+
+  .dash-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-panel {
+    padding: 20px;
+  }
+}

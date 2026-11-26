@@ -1,0 +1,226 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+
+/* ---------- Design tokens ---------- */
+:root {
+  --bg: #eef2ef;
+  --surface: #ffffff;
+  --ink: #14221e;
+  --muted: #5b6b64;
+  --border: #d5ddd8;
+  --accent: #0f6b4f;
+  --accent-soft: #e3f3ec;
+  --accent-hover: #0b5640;
+  --danger: #b3261e;
+  --danger-bg: #fdecea;
+
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+  --font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* ---------- Page layout ---------- */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  background: var(--bg);
+  font-family: var(--font);
+  color: var(--ink);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 32px rgba(20, 34, 30, 0.08);
+}
+
+/* ---------- Header ---------- */
+.auth-header {
+  margin-bottom: 24px;
+}
+
+.auth-header h2 {
+  margin: 0 0 8px;
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+
+.auth-header p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ---------- Error message ---------- */
+.auth-error {
+  margin: 0 0 16px;
+  padding: 10px 12px;
+  background: var(--danger-bg);
+  color: var(--danger);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.auth-error:empty,
+.auth-success:empty {
+  display: none;
+}
+
+.auth-success {
+  color: var(--accent);
+  background: var(--accent-soft);
+  margin: 0 0 16px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+
+/* ---------- Form ---------- */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.form-group input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.form-group input::placeholder {
+  color: #93a19a;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(15, 107, 79, 0.18);
+}
+
+.forgot-password {
+  margin: -4px 0 20px;
+  text-align: right;
+  font-size: 0.875rem;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  width: 100%;
+  padding: 12px 16px;
+  font: inherit;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+}
+
+.btn:focus-visible {
+  outline: 3px solid rgba(15, 107, 79, 0.35);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  color: #fff;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.btn-social {
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-social:hover {
+  background-color: var(--accent);
+  color: var(--bg);
+}
+
+.social-buttons {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+/* ---------- "or" divider ---------- */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ---------- Footer link ---------- */
+.auth-footer {
+  margin: 24px 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.auth-footer span {
+  color: var(--accent);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.auth-footer span:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 28px 20px;
+  }
+}

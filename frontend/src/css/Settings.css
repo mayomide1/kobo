@@ -1,0 +1,253 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+
+.settings {
+  --page-bg: #ffffff;
+  --bg: #eef2ef;
+  --surface: #ffffff;
+  --ink: #14221e;
+  --muted: #5b6b64;
+  --border: #d5ddd8;
+  --accent: #0f6b4f;
+  --accent-hover: #0b5640;
+  --accent-soft: #e3f3ec;
+  --danger: #b3261e;
+  --danger-bg: #fdecea;
+
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+  --font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sidebar-width: 260px;
+}
+
+.settings,
+.settings *,
+.settings *::before,
+.settings *::after {
+  box-sizing: border-box;
+}
+
+.settings {
+  min-height: 100vh;
+  background: var(--page-bg);
+  font-family: var(--font);
+  color: var(--ink);
+}
+
+.settings p,
+.settings h2,
+.settings h3 {
+  margin: 0;
+}
+
+/* ---------- Page header ---------- */
+.settings-header {
+  margin-bottom: 24px;
+}
+
+.settings-header h2 {
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+
+.settings-header p {
+  margin-top: 6px;
+  color: var(--muted);
+}
+
+/* ---------- Cards ---------- */
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 720px;
+}
+
+.settings-card {
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 16px rgba(20, 34, 30, 0.05);
+}
+
+.settings-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.settings-card-desc {
+  margin: 0 20px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* ---------- Form fields ---------- */
+.settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.settings-field label {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.settings-field input,
+.settings-field select {
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.settings-field select {
+  cursor: pointer;
+}
+
+.settings-field input:focus,
+.settings-field select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(15, 107, 79, 0.18);
+}
+
+.settings-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ---------- Buttons ---------- */
+.settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.settings-btn {
+  height: 44px;
+  padding: 0 20px;
+  font: inherit;
+  font-weight: 500;
+  white-space: nowrap;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.settings-btn:focus-visible {
+  outline: 3px solid rgba(15, 107, 79, 0.35);
+  outline-offset: 2px;
+}
+
+.settings-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.settings-btn-primary {
+  color: #fff;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.settings-btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.settings-btn-danger {
+  color: var(--danger);
+  background: var(--surface);
+  border: 1px solid var(--danger);
+}
+
+.settings-btn-danger:hover {
+  background: var(--danger-bg);
+}
+
+/* ---------- Status messages ---------- */
+.settings-status {
+  margin-top: 20px;
+  padding: 12px 16px;
+  font-size: 0.925rem;
+  border-radius: var(--radius-sm);
+}
+
+.settings-status-success {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.settings-status-error {
+  color: var(--danger);
+  background: var(--danger-bg);
+}
+
+/* ---------- Danger zone ---------- */
+.settings-card-danger {
+  border-color: #efc4c0;
+}
+
+.settings-card-danger .settings-card-title {
+  color: var(--danger);
+}
+
+.settings-danger-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+}
+
+.settings-danger-row:last-of-type {
+  padding-bottom: 0;
+}
+
+.settings-danger-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.settings-danger-text {
+  margin-top: 2px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 768px) {
+  .settings-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .settings-card {
+    padding: 20px 18px;
+  }
+
+  .settings-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .settings-actions .settings-btn {
+    width: 100%;
+  }
+
+  .settings-danger-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .settings-danger-row .settings-btn {
+    width: 100%;
+  }
+}

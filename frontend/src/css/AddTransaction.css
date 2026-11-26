@@ -1,0 +1,272 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+
+.add-transaction {
+  --page-bg: #ffffff;
+  --bg: #eef2ef;
+  --surface: #ffffff;
+  --ink: #14221e;
+  --muted: #5b6b64;
+  --border: #d5ddd8;
+  --accent: #0f6b4f;
+  --accent-soft: #e3f3ec;
+  --accent-hover: #0b5640;
+  --danger: #b3261e;
+  --danger-bg: #fdecea;
+
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+  --font: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --sidebar-width: 260px;
+}
+
+.add-transaction,
+.add-transaction *,
+.add-transaction *::before,
+.add-transaction *::after {
+  box-sizing: border-box;
+}
+
+.add-transaction {
+  min-height: 100vh;
+  background: var(--page-bg);
+  font-family: var(--font);
+  color: var(--ink);
+}
+
+/* Centers the card in the page */
+.add-transaction-main {
+  display: flex;
+  justify-content: center;
+  padding-top: 24px;
+}
+
+/* ---------- Card ---------- */
+.add-transaction-card {
+  width: 100%;
+  max-width: 520px;
+  padding: 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 16px rgba(20, 34, 30, 0.05);
+}
+
+.add-transaction-top {
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.add-transaction-top h2 {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.add-transaction-close {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.add-transaction-close:hover {
+  color: var(--ink);
+  background: var(--bg);
+}
+
+/* ---------- Expense / Income toggle ---------- */
+.add-transaction-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 20px;
+  background: var(--bg);
+  border-radius: 12px;
+}
+
+.add-transaction-toggle button {
+  padding: 12px;
+  font: inherit;
+  font-weight: 500;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.add-transaction-toggle button:hover:not(.is-active) {
+  color: var(--ink);
+}
+
+.add-transaction-toggle button.is-active {
+  font-weight: 700;
+  color: #fff;
+  background: var(--accent);
+}
+
+/* ---------- Fields ---------- */
+.add-transaction-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.add-transaction-field label {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.add-transaction-field input,
+.add-transaction-field select {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.add-transaction-field select {
+  cursor: pointer;
+}
+
+.add-transaction-field input::placeholder {
+  color: #9aa7a1;
+}
+
+.add-transaction-field input:focus,
+.add-transaction-field select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(15, 107, 79, 0.18);
+}
+
+/* hide the number input's up/down arrows */
+.add-transaction-field input[type="number"]::-webkit-outer-spin-button,
+.add-transaction-field input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.add-transaction-field input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Category + Date side by side */
+.add-transaction-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ---------- Error ---------- */
+.add-transaction-error {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  font-size: 0.925rem;
+  color: var(--danger);
+  background: var(--danger-bg);
+  border-radius: var(--radius-sm);
+}
+
+.add-transaction-success {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  font-size: 0.925rem;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: var(--radius-sm);
+}
+
+/* ---------- Buttons ---------- */
+.add-transaction-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.add-transaction-btn {
+  height: 48px;
+  padding: 0 16px;
+  font: inherit;
+  font-weight: 500;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.add-transaction-btn:focus-visible,
+.add-transaction-toggle button:focus-visible,
+.add-transaction-close:focus-visible {
+  outline: 3px solid rgba(15, 107, 79, 0.35);
+  outline-offset: 2px;
+}
+
+.add-transaction-btn-cancel {
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.add-transaction-btn-cancel:hover {
+  background: var(--bg);
+}
+
+.add-transaction-btn-submit {
+  color: #fff;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.add-transaction-btn-submit:hover:not(:disabled) {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.add-transaction-btn-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 768px) {
+  .add-transaction-main {
+    padding-top: 8px;
+  }
+
+  .add-transaction-card {
+    padding: 22px 18px;
+  }
+
+  .add-transaction-top h2 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 420px) {
+  /* stack Category and Date on very narrow phones */
+  .add-transaction-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
