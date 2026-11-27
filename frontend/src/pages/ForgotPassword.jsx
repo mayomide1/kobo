@@ -36,6 +36,14 @@ export default function ForgotPassword() {
         <p className="forgot-subtitle">
           Enter your email and we'll send you a link to reset your password.
         </p>
+        {status && (
+          <p
+            className={`forgot-status forgot-status-${status.type}`}
+            role={status.type === "error" ? "alert" : "status"}
+          >
+            {status.message}
+          </p>
+        )}
 
         <div className="forgot-field">
           <label htmlFor="email">Email</label>
@@ -50,20 +58,11 @@ export default function ForgotPassword() {
           />
         </div>
 
-        {status && (
-          <p
-            className={`forgot-status forgot-status-${status.type}`}
-            role={status.type === "error" ? "alert" : "status"}
-          >
-            {status.message}
-          </p>
-        )}
-
         <button type="submit" className="forgot-btn" disabled={loading}>
           {loading ? "Sending..." : "Send Reset Link"}
         </button>
 
-        <Link to="/login" className="forgot-back">
+        <Link to="/" className="forgot-back">
           Back to login
         </Link>
       </form>
