@@ -47,6 +47,12 @@ const Login = () => {
           <h2>Welcome back!</h2>
           <p>Start managing your finance smarter and better.</p>
         </header>
+
+        {/* <div className="social-buttons">
+          <button className="btn btn-social"><FcGoogle /> Continue with Google</button>
+        </div> */}
+
+        {/* <p className="divider">or</p> */}
         
         <p className="auth-error">{errorMsg}</p>
         <p className="auth-success">{successMsg}</p>
@@ -73,18 +79,13 @@ const Login = () => {
           />
         </div>
 
-        {/* <p className="forgot-password" onClick={() => navigate("/forgot-password")}>Forgot password?</p> */}
+        <p className="forgot-password" onClick={() => navigate("/forgot-password")}>Forgot password?</p>
 
         <button className="btn btn-primary" onClick={() => handleLogin()}>
           {loading ? "Logging in...": "Login"}
-          
         </button>
 
-        {/* <p className="divider">or</p> */}
-
-        {/* <div className="social-buttons">
-          <button className="btn btn-social"><FcGoogle /> Google</button>
-        </div> */}
+        <p className="divider"></p>
 
         <p className="auth-footer">
           Dont have an account?{" "}

@@ -7,6 +7,7 @@ import Transactions from './pages/Transactions'
 import Settings from './pages/Settings'
 import AddTransaction from './pages/AddTransaction'
 import Layout from './components/Layout'
+import ResetPassword from './pages/ResetPassword'
 
 const App = () => {
   return (
@@ -14,7 +15,8 @@ const App = () => {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route element={<Layout/>}>
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route element={<Layout/>}>
         <Route path="/transactions" element={<Transactions />} />
         <Route path="/add-transaction" element={<AddTransaction />} />
         <Route path="/settings" element={<Settings />} />

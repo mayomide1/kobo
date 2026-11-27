@@ -170,12 +170,12 @@ const Settings = () => {
               <Status status={profileStatus} />
 
               <div className="settings-actions">
-                {/* <button
+                <button
                   className="settings-btn settings-btn-primary"
                   disabled={profileLoading}
                 >
                   {profileLoading ? "Saving..." : "Save changes"}
-                </button> */}
+                </button>
               </div>
             </form>
           </section>

@@ -4,6 +4,8 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const {Resend} = require("resend")
+const crypto = require("crypto")
 const User = require("./User");
 const protect = require("./middleware/auth")
 const Transaction = require("./Transaction");
@@ -12,6 +14,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 
 app.post("/auth/register", async (req, res) => {
@@ -172,6 +176,84 @@ app.put("/change-password", protect, async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/forgot-password', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    // For security, even if the user does not exist, return a success message to prevent email enumeration
+    if (!user) {
+      return res.status(200).json({ message: 'If that email exists, a reset link has been sent.' });
+    }
+
+    // 1. Generate a random token and set an expiration time (e.g., 15 minutes)
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetTokenExpiry = Date.now() + 15 * 60 * 1000; // 15 minutes
+
+    // Save the token to the user record (or a separate Token collection)
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = resetTokenExpiry;
+    await user.save();
+
+    // 2. Build the reset link (pointing to your frontend reset page)
+    const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+
+    // 3. Send the email using Resend
+    const { data, error } = await resend.emails.send({
+      from: 'onboarding@resend.dev',
+      to: user.email,
+      subject: 'Reset your Kobo password',
+      html: `
+        <p>You requested a password reset for your Kobo account.</p>
+        <p>Click the link below to set a new password. This link expires in 15 minutes.</p>
+        <button href="${resetUrl}">Reset Password</button>
+        <p>If you didn't request this, you can safely ignore this email.</p>
+      `,
+    });
+
+    if (error) {
+      console.error('Resend error:', error);
+      return res.status(500).json({ message: 'Failed to send email.' });
+    }
+
+    res.status(200).json({ message: 'If that email exists, a reset link has been sent.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+app.post('/reset-password', async (req, res) => {
+  const { token, newPassword } = req.body;
+
+  try {
+    // Find the user with a valid, unexpired token
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() }, // Not expired
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: 'Token is invalid or has expired.' });
+    }
+
+    // Update the password (assuming you use bcrypt to hash passwords)
+    const bcrypt = require('bcrypt');
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+
+    // Clear the token fields
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.status(200).json({ message: 'Password reset successful. You can now log in.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error.' });
   }
 });
 
