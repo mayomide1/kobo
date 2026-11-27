@@ -4,10 +4,10 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const {Resend} = require("resend")
-const crypto = require("crypto")
+const { Resend } = require("resend");
+const crypto = require("crypto");
 const User = require("./User");
-const protect = require("./middleware/auth")
+const protect = require("./middleware/auth");
 const Transaction = require("./Transaction");
 
 const app = express();
@@ -16,7 +16,6 @@ app.use(cors());
 app.use(express.json());
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-
 
 app.post("/auth/register", async (req, res) => {
   try {
@@ -43,8 +42,8 @@ app.post("/auth/register", async (req, res) => {
     });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-  expiresIn: "7d",
-});
+      expiresIn: "7d",
+    });
 
     res.status(200).json({
       message: "Account created successfully!",
@@ -125,21 +124,23 @@ app.post("/auth/login", async (req, res) => {
 
 app.delete("/users/me", protect, async (req, res) => {
   try {
-    await Transaction.deleteMany({ userId: req.userId }); 
-     const user = await User.findByIdAndDelete(req.userId);
+    await Transaction.deleteMany({ userId: req.userId });
+    const user = await User.findByIdAndDelete(req.userId);
     if (!user) {
-    return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json({ message: "Your account has been deleted successfully." });
+    res
+      .status(200)
+      .json({ message: "Your account has been deleted successfully." });
   } catch (error) {
-    res.status(500).json({message: "Something went wrong" });
+    res.status(500).json({ message: "Something went wrong" });
   }
 });
 
 app.put("/change-password", protect, async (req, res) => {
   try {
-    const {currentPassword, newPassword } = req.body;
+    const { currentPassword, newPassword } = req.body;
 
     if (!currentPassword || !newPassword) {
       return res.status(400).json({ message: "All field are required" });
@@ -179,28 +180,33 @@ app.put("/change-password", protect, async (req, res) => {
   }
 });
 
-app.post('/forgot-password', async (req, res) => {
+app.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
 
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(200).json({ message: 'If that email exists, a reset link has been sent.' });
+      return res
+        .status(200)
+        .json({
+          message:
+            "If the email exists, a password reset instructions has been sent to the email address. Please check your inbox and spam folder.",
+        });
     }
 
-    const resetToken = crypto.randomBytes(32).toString('hex');
-    const resetTokenExpiry = Date.now() + 15 * 60 * 1000; // 15 minutes
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const resetTokenExpiry = Date.now() + 15 * 60 * 1000;
 
     user.resetPasswordToken = resetToken;
     user.resetPasswordExpires = resetTokenExpiry;
     await user.save();
 
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
-    
+
     const { data, error } = await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: "onboarding@resend.dev",
       to: user.email,
-      subject: 'Reset your Kobo password',
+      subject: "Reset your Kobo password",
       html: `
         <p>You requested a password reset for your Kobo account.</p>
         <p>Click the link below to set a new password. This link expires in 15 minutes.</p>
@@ -210,18 +216,23 @@ app.post('/forgot-password', async (req, res) => {
     });
 
     if (error) {
-      console.error('Resend error:', error);
-      return res.status(500).json({ message: 'Failed to send email.' });
+      console.error("Resend error:", error);
+      return res.status(500).json({ message: "Failed to send email." });
     }
 
-    res.status(200).json({ message: 'If that email exists, a reset link has been sent.' });
+    res
+      .status(200)
+      .json({
+        message:
+          "If the email exists, a password reset instructions has been sent to the email address. Please check your inbox and spam folder.",
+      });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Server error.' });
+    res.status(500).json({ message: "Server error." });
   }
 });
 
-app.post('/reset-password', async (req, res) => {
+app.post("/reset-password", async (req, res) => {
   const { token, newPassword } = req.body;
 
   try {
@@ -231,10 +242,12 @@ app.post('/reset-password', async (req, res) => {
     });
 
     if (!user) {
-      return res.status(400).json({ message: 'Token is invalid or has expired.' });
+      return res
+        .status(400)
+        .json({ message: "Token is invalid or has expired." });
     }
 
-    const bcrypt = require('bcrypt');
+    const bcrypt = require("bcrypt");
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(newPassword, salt);
 
@@ -242,70 +255,75 @@ app.post('/reset-password', async (req, res) => {
     user.resetPasswordExpires = undefined;
     await user.save();
 
-    res.status(200).json({ message: 'Password reset successful. You can now log in.' });
+    res
+      .status(200)
+      .json({ message: "Password reset successful. You can now log in." });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Server error.' });
+    res.status(500).json({ message: "Server error." });
   }
 });
 
 app.post("/transaction", protect, async (req, res) => {
   try {
-    const {amount, description, category, date, type} = req.body
+    const { amount, description, category, date, type } = req.body;
 
-    if(!amount || !description || !category || !type ||!date){
-          return res.status(400).json({ message: "All fields are required" });
+    if (!amount || !description || !category || !type || !date) {
+      return res.status(400).json({ message: "All fields are required" });
     }
     const transaction = await Transaction.create({
-        userId: req.userId,
-        amount, 
-        type,
-        category,
-        description,
-        date: new Date()
-    })
-    res.status(200).json({message: "Transaction added successfully", transaction})
+      userId: req.userId,
+      amount,
+      type,
+      category,
+      description,
+      date: new Date(),
+    });
+    res
+      .status(200)
+      .json({ message: "Transaction added successfully", transaction });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.get("/transactions", protect, async(req, res) => {
-    try{
-        const transactions = await Transaction.find({userId: req.userId})
-        .sort({ date: -1, createdAt: -1 });
+app.get("/transactions", protect, async (req, res) => {
+  try {
+    const transactions = await Transaction.find({ userId: req.userId }).sort({
+      date: -1,
+      createdAt: -1,
+    });
 
-        if(!transactions){
-          return  res.status(400).json({message: "No transactions yet!"})
-        }
-
-        res.status(200).json(transactions)
-
-    }catch(error){
-       res.status(500).json({ error: error.message }); 
+    if (!transactions) {
+      return res.status(400).json({ message: "No transactions yet!" });
     }
-})
+
+    res.status(200).json(transactions);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 app.delete("/delete-transaction/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-        const transaction = await Transaction.findByIdAndDelete(id);
+    const transaction = await Transaction.findByIdAndDelete(id);
 
-        if (!transaction) {
-            return res.status(404).json({ message: "Transaction not found" });
-        }
-
-        res.status(200).json({
-            message: "Transaction deleted successfully",
-            transaction,
-        });
-    } catch (error) {
-        if (error.name === "CastError") {
-            return res.status(400).json({ error: "Invalid transaction ID" });
-        }
-        res.status(500).json({ error: error.message });
+    if (!transaction) {
+      return res.status(404).json({ message: "Transaction not found" });
     }
+
+    res.status(200).json({
+      message: "Transaction deleted successfully",
+      transaction,
+    });
+  } catch (error) {
+    if (error.name === "CastError") {
+      return res.status(400).json({ error: "Invalid transaction ID" });
+    }
+    res.status(500).json({ error: error.message });
+  }
 });
 
 const port = process.env.PORT;
@@ -313,8 +331,7 @@ const port = process.env.PORT;
 const dns = require("dns");
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
-mongoose.connect(process.env.MONGO_URI)
-.then(() => {
+mongoose.connect(process.env.MONGO_URI).then(() => {
   app.listen(port, () => {
     console.log(`listening on port ${port}`);
   });

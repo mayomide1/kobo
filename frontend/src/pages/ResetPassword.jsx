@@ -56,6 +56,14 @@ export default function ResetPassword() {
         <p className="reset-subtitle">
           Choose a strong password you haven't used before.
         </p>
+        {status && (
+          <p
+            className={`reset-status reset-status-${status.type}`}
+            role={status.type === "error" ? "alert" : "status"}
+          >
+            {status.message}
+          </p>
+        )}
 
         <div className="reset-field">
           <label htmlFor="password">New password</label>
@@ -92,15 +100,6 @@ export default function ResetPassword() {
           )}
           <span className="reset-hint">At least 8 characters.</span>
         </div>
-
-        {status && (
-          <p
-            className={`reset-status reset-status-${status.type}`}
-            role={status.type === "error" ? "alert" : "status"}
-          >
-            {status.message}
-          </p>
-        )}
 
         <button type="submit" className="reset-btn" disabled={loading}>
           {loading ? "Resetting..." : "Reset Password"}
