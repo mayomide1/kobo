@@ -184,24 +184,19 @@ app.post('/forgot-password', async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    // For security, even if the user does not exist, return a success message to prevent email enumeration
     if (!user) {
       return res.status(200).json({ message: 'If that email exists, a reset link has been sent.' });
     }
 
-    // 1. Generate a random token and set an expiration time (e.g., 15 minutes)
     const resetToken = crypto.randomBytes(32).toString('hex');
     const resetTokenExpiry = Date.now() + 15 * 60 * 1000; // 15 minutes
 
-    // Save the token to the user record (or a separate Token collection)
     user.resetPasswordToken = resetToken;
     user.resetPasswordExpires = resetTokenExpiry;
     await user.save();
 
-    // 2. Build the reset link (pointing to your frontend reset page)
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
-
-    // 3. Send the email using Resend
+    
     const { data, error } = await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: user.email,
@@ -230,22 +225,19 @@ app.post('/reset-password', async (req, res) => {
   const { token, newPassword } = req.body;
 
   try {
-    // Find the user with a valid, unexpired token
     const user = await User.findOne({
       resetPasswordToken: token,
-      resetPasswordExpires: { $gt: Date.now() }, // Not expired
+      resetPasswordExpires: { $gt: Date.now() },
     });
 
     if (!user) {
       return res.status(400).json({ message: 'Token is invalid or has expired.' });
     }
 
-    // Update the password (assuming you use bcrypt to hash passwords)
     const bcrypt = require('bcrypt');
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(newPassword, salt);
 
-    // Clear the token fields
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
     await user.save();
