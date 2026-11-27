@@ -209,7 +209,7 @@ app.post('/forgot-password', async (req, res) => {
       html: `
         <p>You requested a password reset for your Kobo account.</p>
         <p>Click the link below to set a new password. This link expires in 15 minutes.</p>
-        <button href="${resetUrl}">Reset Password</button>
+        <a href="${resetUrl}">Reset Password</a>
         <p>If you didn't request this, you can safely ignore this email.</p>
       `,
     });
