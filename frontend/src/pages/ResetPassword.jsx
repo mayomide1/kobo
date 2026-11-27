@@ -39,7 +39,7 @@ export default function ResetPassword() {
         type: "success",
         message: "Password reset successful. Redirecting to login...",
       });
-      setTimeout(() => navigate("/login"), 1500);
+      setTimeout(() => navigate("/"), 1500);
     } catch (err) {
       setStatus({
         type: "error",
