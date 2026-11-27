@@ -15,6 +15,8 @@ export default function ResetPassword() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const isPasswordMatch = password.length > 0 && password === confirmPassword;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus(null);
@@ -79,6 +81,15 @@ export default function ResetPassword() {
             minLength={8}
             required
           />
+          {confirmPassword.length > 0 && (
+            <p
+              style={{
+                color: isPasswordMatch ? "var(--accent)" : "var(--danger)",
+              }}
+            >
+              {isPasswordMatch ? "Password Match" : "Password does not match"}
+            </p>
+          )}
           <span className="reset-hint">At least 8 characters.</span>
         </div>
 
@@ -95,7 +106,7 @@ export default function ResetPassword() {
           {loading ? "Resetting..." : "Reset Password"}
         </button>
 
-        <Link to="/login" className="reset-back">
+        <Link to="/" className="reset-back">
           Back to login
         </Link>
       </form>
